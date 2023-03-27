@@ -3,11 +3,13 @@ from datetime import timedelta
 from flask import Flask, request, jsonify
 from flask_jwt_simple import JWTManager
 
+from posts.repo import InMemoryPostsRepo
 from tools.misc import make_resp, check_keys, create_jwt_generate_response
 from users.repo import ImMemoryUsersRepo
 
 app = Flask(__name__)
 app.user_repo = ImMemoryUsersRepo()
+app.post_repo = InMemoryPostsRepo()
 app.config['JWT_SECRET_KEY'] = 'super-secret'
 app.config['JWT_EXPIRES'] = timedelta(hours=24)
 app.config['JWT_IDENTITY_CLAIM'] = 'user'

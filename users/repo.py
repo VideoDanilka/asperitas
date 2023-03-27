@@ -23,7 +23,7 @@ class ImMemoryUsersRepo:
 
     def authorize(self, username, password):
         found = self.get_by_name(username)
-        if found is not None:
+        if found is None:
             return None, 'user not found'  # пользователя не нашли
         if found.password != password:
             return None, 'bad password'
