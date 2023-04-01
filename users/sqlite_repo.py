@@ -1,8 +1,9 @@
 from tools.misc import get_connection_cursor
-from users.user import User
+from users import user
 
 
-class SqliteUsersRepo(user.UserRepo):
+
+class SqliteUsersRepo:
     def __init__(self, name):
         self.name = name
 
@@ -41,18 +42,18 @@ class SqliteUsersRepo(user.UserRepo):
         con.close()
         return user.User(id=result[0], username=result[1], password=result[2])
 
-    def request_create(self, name, password):
-        found = self.get_by_name(name)
+    def request_create(self, username, password):
+        found = self.get_by_name(username)
         if not (found is None):
             return None
         query = """INSERT INTO users(username, password)
                     VALUES (?, ?)"""
         con, cur = get_connection_cursor(self.name)
-        result = cur.execute(query, (name, password))
+        result = cur.execute(query, (username, password))
         if not result.rowcount > 0:
             con.close()
             return None
-        new_user = user.User(id=result.lastrowid, username=name, password=password)
+        new_user = user.User(id=result.lastrowid, username=username, password=password)
         con.commit()
         con.close()
         return new_user

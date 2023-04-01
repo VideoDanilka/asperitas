@@ -5,8 +5,8 @@ from app.app2 import main_app
 from tools.misc import create_jwt_for_user
 
 parser = reqparse.RequestParser()
-parser.add_argument('username', require=True)
-parser.add_argument('password', require=True)
+parser.add_argument('username')
+parser.add_argument('password')
 
 
 class RegisterRes(Resource):
