@@ -1,3 +1,4 @@
+from flask import jsonify
 from flask_restful import Resource, reqparse, abort
 
 from app.app2 import main_app
@@ -26,3 +27,7 @@ class LoginRes(Resource):
             abort(400, message=error)
         return create_jwt_for_user(user)
 
+
+class UserPost(Resource):
+    def get(self, user_login):
+        return jsonify(main_app.post_repo.get_by_username(user_login))
